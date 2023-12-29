@@ -1,0 +1,31 @@
+---
+- name: Ensure required packages are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - unzip
+    - wget
+
+- name: Download and extract MongoDB Exporter
+  get_url:
+    url: "https://github.com/percona/mongodb_exporter/releases/download/v{{ mongodb_exporter_version }}/mongodb_exporter-{{ mongodb_exporter_version }}.linux-amd64.tar.gz"
+    dest: "/tmp/mongodb_exporter.tar.gz"
+    mode: '0644'
+  #register: download_result#
+
+- name: Extract MongoDB Exporter archive
+  ansible.builtin.unarchive:
+    src: "/tmp/mongodb_exporter.tar.gz"
+    dest: "/opt"
+    remote_src: true
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+  #when: download_result.changed#
+
+- name: Create systemd service for MongoDB Exporter
+  template:
+    src: "mongodb_exporter.service.j2"
+    dest: "/usr/lib/systemd/system/mongodb_exporter.{{ mongodb_port }}.service"
+  notify: restart mongodb exporter

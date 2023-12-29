@@ -1,0 +1,4 @@
+[mongo]
+    db-node01 mongodb_port=27017 mongodb_exporter_port=9217
+    db-node02 mongodb_port=27017 mongodb_exporter_port=9217
+    db-node03 mongodb_port=27017 mongodb_exporter_port=9217

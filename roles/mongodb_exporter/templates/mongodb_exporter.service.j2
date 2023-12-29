@@ -1,0 +1,13 @@
+[Unit]
+Description=MongoDB Exporter
+
+[Service]
+User=prometheus
+Group=prometheus
+Environment='OPTIONS=--web.listen-address=":{{ mongodb_exporter_port }}"  --mongodb.uri=mongodb://mongodb_exporter:{{ mongodb_exporter_password }}@localhost:{{ mongodb_port }}/?ssl=false --compatible-mode'
+ExecStart=/opt/mongodb_exporter-{{ mongodb_exporter_version }}.linux-amd64/mongodb_exporter $OPTIONS
+PIDFile=/var/run/mongodb_exporter.{{ mongodb_port }}.pid
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

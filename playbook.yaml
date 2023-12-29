@@ -1,0 +1,8 @@
+---
+- name: Deploy MongoDB Exporter
+  hosts: all
+  become: true
+  vars_files:
+    - config_enviroment.yml
+  roles:
+    - mongodb_exporter

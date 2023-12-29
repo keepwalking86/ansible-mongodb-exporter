@@ -1,0 +1,5 @@
+---
+    #Config node_exporter
+    mongodb_exporter_version: 0.30.0
+    mongodb_exporter_user: changeme
+    mongodb_exporter_password: changeme
